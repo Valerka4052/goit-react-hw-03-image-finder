@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getApi } from '../api'
+import { getApi } from './api'
 import { SearchBar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery'
 import { Button } from './Button/Button';

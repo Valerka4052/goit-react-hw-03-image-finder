@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { Component } from 'react';
 
 const ModalRoot = document.querySelector('#modal-root')
-console.log(ModalRoot)
 
 export class Modal extends Component {
     static propTypes = {

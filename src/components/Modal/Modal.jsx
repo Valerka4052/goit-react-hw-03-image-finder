@@ -8,7 +8,8 @@ console.log(ModalRoot)
 
 export class Modal extends Component {
     static propTypes = {
-    LargeImage: PropTypes.string.isRequired,
+        LargeImage: PropTypes.string.isRequired,
+        toggleModal: PropTypes.func.isRequired,
     };
 
      componentDidMount() {
@@ -23,10 +24,12 @@ export class Modal extends Component {
     if (e.target.id === 'overlay') { return this.props.toggleModal() };
   };
 
-    render(){
+    render() {
+    const { LargeImage } = this.props;
+
     return createPortal (<Overlay id='overlay'>
             <ModalContainer>
-                <img src={this.props.LargeImage} alt="" />
+                <img src={LargeImage} alt="" />
             </ModalContainer>
         </Overlay>,
         ModalRoot

@@ -48,7 +48,7 @@ export class App extends Component{
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
-  toggleLoading() {
+  toggleLoading = () => {
     this.setState(({ loading }) => ({ loading: !loading }));
   };
 
@@ -89,8 +89,10 @@ export class App extends Component{
           paddingBottom: '24px'
         }}
       >
-        <SearchBar onSearch={searchQuerryToState} />
-        <ImageGallery array={pictures}
+        <SearchBar
+          onSearch={searchQuerryToState} />
+        <ImageGallery
+          array={pictures}
           getLargeImage={getLargeImage} />
         {loading && <Loader />}
         {!loading && pictures.length > 0 && !lastPage && <Button loadMore={loadMore} />}

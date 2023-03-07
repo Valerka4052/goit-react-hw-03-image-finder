@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {Item,Image} from './ImageGalleryItem.styled'
+import { Item, Image } from './ImageGalleryItem.styled';
 
 export function ImageGalleryItem({imageUrl,largeImageURL}) {
     return (<Item>

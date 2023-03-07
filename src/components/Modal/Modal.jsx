@@ -3,7 +3,7 @@ import { Overlay, ModalContainer } from './Modal.styled';
 import { createPortal } from 'react-dom';
 import { Component } from 'react';
 
-const ModalRoot = document.querySelector('#modal-root')
+const ModalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
     static propTypes = {
@@ -13,25 +13,25 @@ export class Modal extends Component {
 
      componentDidMount() {
        window.addEventListener('click', this.ModalEventLisetener)
-  };
+    };
      componentWillUnmount() {
    window.removeEventListener("click", this.ModalEventLisetener);
-  };
+    };
 
-      ModalEventLisetener = (e) => {
-          console.log(e.target);
-    if (e.target.id === 'overlay') { return this.props.toggleModal() };
-  };
+    ModalEventLisetener = (e) => {
+        console.log(e.target);
+        if (e.target.id === 'overlay') { return this.props.toggleModal() };
+    };
 
     render() {
     const { LargeImage } = this.props;
 
-    return createPortal (<Overlay id='overlay'>
+        return createPortal(<Overlay id='overlay'>
             <ModalContainer>
                 <img src={LargeImage} alt="" />
             </ModalContainer>
         </Overlay>,
-        ModalRoot
+            ModalRoot
         );
     };
 };

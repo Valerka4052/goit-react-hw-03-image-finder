@@ -16,9 +16,10 @@ export class App extends Component{
     showModal: false,
     loading: false,
   };
-  componentDidMount() {
-       window.addEventListener('click', this.ModalEventLisetener)
-  };
+  // componentDidMount() {
+  //   if(!this.state.showModal){
+  //      window.addEventListener('click', this.ModalEventLisetener)}
+  // };
   componentDidUpdate(_, prevState) {
     const { page, searchQuerry } = this.state;
       if (page !== prevState.page && searchQuerry === prevState.searchQuerry) {
@@ -33,9 +34,9 @@ export class App extends Component{
       }).finally(this.toggleLoading());
     };
   };
- componentWillUnmount() {
-   window.removeEventListener("click", this.ModalEventLisetener);
-  };
+//  componentWillUnmount() {
+//    window.removeEventListener("click", this.ModalEventLisetener);
+//   };
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
@@ -62,6 +63,7 @@ export class App extends Component{
   };
   
   ModalEventLisetener = (e) => {
+    console.log('hahaha')
     if (e.target.id === 'overlay') { return this.toggleModal() };
   };
    

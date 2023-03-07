@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Form as FormikForm, Formik as FormikFormik, Field as FormikField} from 'formik';
+import { Form as FormikForm, Field as FormikField} from 'formik';
 
 export const Header = styled.header `
   top: 0;
@@ -39,11 +39,11 @@ export const Button = styled.button `
   height: 48px;
   border: 0;
   /* background-image: url('https://image.flaticon.com/icons/svg/149/149852.svg'); */
-  background-size: 40%;
+  /* background-size: 40%;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0.6;
-  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1); */
   cursor: pointer;
   outline: none;
   &:hover {

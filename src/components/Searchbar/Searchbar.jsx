@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { Header, Form, Button, ButtonLabel, Field } from './Searchbar.styled';
 
-// import { ReactComponent as SearchIcon } from "../icons/search.svg";
+import { ReactComponent as SearchIcon } from "../icons/search.svg";
 
 export class SearchBar extends Component {
     static propTypes = {
@@ -29,7 +29,7 @@ const validationSchema = Yup.object({
               >
                   <Form>
                       <Button type="submit">
-                          {/* <SearchIcon width={20} height={20} /> */}
+                          <SearchIcon width={20} height={20} />
                           <ButtonLabel ></ButtonLabel>
                       </Button>
                       <Field

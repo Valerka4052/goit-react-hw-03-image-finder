@@ -32,6 +32,9 @@ export class App extends Component{
           if (array.length < 12 && array.length > 0) {
             this.setState({ lastPage: true })
           };
+          if (array.length === 12) {
+            this.setState({ lastPage: false })
+          };
           if (array.length) {
             this.setState({ pictures: array })
           } else {

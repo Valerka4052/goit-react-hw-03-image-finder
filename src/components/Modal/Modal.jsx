@@ -19,7 +19,6 @@ export class Modal extends Component {
     };
 
     ModalEventLisetener = (e) => {
-        console.log(e.target);
         if (e.target.id === 'overlay') { return this.props.toggleModal() };
     };
 

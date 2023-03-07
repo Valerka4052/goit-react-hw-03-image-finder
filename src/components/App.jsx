@@ -20,13 +20,15 @@ export class App extends Component{
 
   componentDidUpdate(_, prevState) {
     const { page, searchQuerry} = this.state;
-      if (page !== prevState.page && searchQuerry === prevState.searchQuerry) {
+    if (page > prevState.page && searchQuerry === prevState.searchQuerry) {
+        // Дії для кнопки Load More
         this.toggleLoading();
         getApi(searchQuerry, page).then((array) => {
           if (array.length < 12) { this.setState({ lastPage: true }) };
           this.setState(prevState => { return { pictures: [...prevState.pictures, ...array] } });
         }).finally(this.toggleLoading());
     } else if (searchQuerry !== prevState.searchQuerry) {
+      // Дії для кнопки пошуку в SearcBar
       this.toggleLoading();
         getApi(searchQuerry, page).then((array) => {
           if (array.length < 12 && array.length > 0) {

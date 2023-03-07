@@ -15,19 +15,29 @@ export class App extends Component{
     largeImage: "",
     showModal: false,
     loading: false,
+    lastPage: false,
   };
 
   componentDidUpdate(_, prevState) {
-    const { page, searchQuerry } = this.state;
+    const { page, searchQuerry} = this.state;
       if (page !== prevState.page && searchQuerry === prevState.searchQuerry) {
         this.toggleLoading();
         getApi(searchQuerry, page).then((array) => {
+          if (array.length < 12) { this.setState({ lastPage: true }) };
           this.setState(prevState => { return { pictures: [...prevState.pictures, ...array] } });
         }).finally(this.toggleLoading());
     } else if (searchQuerry !== prevState.searchQuerry) {
       this.toggleLoading();
-      getApi(searchQuerry, page).then((array) => {
-        array.length ? this.setState({ pictures: array }) : Notiflix.Notify.failure('Please enter the valid search querry');
+        getApi(searchQuerry, page).then((array) => {
+          if (array.length < 12 && array.length > 0) {
+            this.setState({ lastPage: true })
+          };
+          if (array.length) {
+            this.setState({ pictures: array })
+          } else {
+            Notiflix.Notify.failure('Please enter valid search querry');
+            this.setState({ pictures: [] })
+          };
       }).finally(this.toggleLoading());
     };
   };
@@ -65,7 +75,7 @@ export class App extends Component{
   
   render() {
 
-    const {toggleModal, searchQuerryToState, loadMore, getLargeImage, state: { pictures, largeImage, showModal, loading } } = this;
+    const {toggleModal, searchQuerryToState, loadMore, getLargeImage, state: {lastPage, pictures, largeImage, showModal, loading } } = this;
 
     return (
       <div
@@ -80,7 +90,7 @@ export class App extends Component{
         <ImageGallery array={pictures}
           getLargeImage={getLargeImage} />
         {loading && <Loader />}
-        {!loading && pictures.length > 0 && <Button loadMore={loadMore} />}
+        {!loading && pictures.length > 0 && !lastPage && <Button loadMore={loadMore} />}
         {showModal && <Modal
           LargeImage={largeImage}
           toggleModal={toggleModal}

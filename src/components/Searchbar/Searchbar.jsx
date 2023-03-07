@@ -33,7 +33,8 @@ const validationSchema = Yup.object({
                           <ButtonLabel ></ButtonLabel>
                       </Button>
                       <Field
-                          name="searchQuerry" type="text"
+                          name="searchQuerry"
+                          type="text"
                           autoComplete="off"
                           autoFocus
                           placeholder="Search images and photos" />

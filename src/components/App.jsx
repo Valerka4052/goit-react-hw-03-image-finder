@@ -16,10 +16,7 @@ export class App extends Component{
     showModal: false,
     loading: false,
   };
-  // componentDidMount() {
-  //   if(!this.state.showModal){
-  //      window.addEventListener('click', this.ModalEventLisetener)}
-  // };
+
   componentDidUpdate(_, prevState) {
     const { page, searchQuerry } = this.state;
       if (page !== prevState.page && searchQuerry === prevState.searchQuerry) {
@@ -34,9 +31,6 @@ export class App extends Component{
       }).finally(this.toggleLoading());
     };
   };
-//  componentWillUnmount() {
-//    window.removeEventListener("click", this.ModalEventLisetener);
-//   };
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
@@ -47,7 +41,9 @@ export class App extends Component{
 
   getLargeImage = (e) => {
     this.setState({ largeImage: e.target.id });
-    this.toggleModal();
+    if(e.target.nodeName==='IMG'){
+      this.toggleModal();
+    };
   };
 
   searchQuerryToState = (value) => {
@@ -61,12 +57,7 @@ export class App extends Component{
       page: 1
     });
   };
-  
-  ModalEventLisetener = (e) => {
-    console.log('hahaha')
-    if (e.target.id === 'overlay') { return this.toggleModal() };
-  };
-   
+
   loadMore = () => {
     this.setState(({ page }) => { return { page: page + 1 } });
   };
@@ -74,7 +65,7 @@ export class App extends Component{
   
   render() {
 
-    const { searchQuerryToState, loadMore, getLargeImage, state: { pictures, largeImage, showModal, loading } } = this;
+    const {toggleModal, searchQuerryToState, loadMore, getLargeImage, state: { pictures, largeImage, showModal, loading } } = this;
 
     return (
       <div
@@ -90,7 +81,10 @@ export class App extends Component{
           getLargeImage={getLargeImage} />
         {loading && <Loader />}
         {!loading && pictures.length > 0 && <Button loadMore={loadMore} />}
-        {showModal && <Modal LargeImage={largeImage} />}
+        {showModal && <Modal
+          LargeImage={largeImage}
+          toggleModal={toggleModal}
+        />}
       </div>
     );
   };

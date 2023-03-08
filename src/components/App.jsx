@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getApi } from '../api'
+import { getApi, ItemsPerPage } from '../api'
 import { SearchBar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery'
 import { Button } from './Button/Button';
@@ -25,7 +25,7 @@ export class App extends Component{
       toggleLoading();
       getApi(searchQuerry, page)
         .then((array) => {
-          if (array.length < 12) {
+          if (array.length < ItemsPerPage) {
             this.setState({ lastPage: true })
           };
           this.setState(prevState => {
@@ -35,13 +35,16 @@ export class App extends Component{
         });
     } else if (searchQuerry !== prevState.searchQuerry) {
       // Дії для searchBar
+      if (prevState.pictures.length > 0){
+        this.setState({ pictures: [] })
+      };
       toggleLoading();
       getApi(searchQuerry, page)
         .then((array) => {
-          if (array.length < 12 && array.length > 0) {
+          if (array.length < ItemsPerPage && array.length > 0) {
             this.setState({ lastPage: true })
           };
-          if (array.length === 12) {
+          if (array.length === ItemsPerPage) {
             this.setState({ lastPage: false })
           };
           if (array.length) {
@@ -54,7 +57,6 @@ export class App extends Component{
         })
     };
   };
-
  
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));

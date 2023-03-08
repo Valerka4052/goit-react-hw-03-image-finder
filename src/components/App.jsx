@@ -63,15 +63,6 @@ export class App extends Component{
     this.setState(({ loading }) => ({ loading: !loading }));
   };
 
-  start = () => {
-    console.log('start', Date.now());
-    this.setState({ loading: true });
-  };
-  stop = () => {
-    console.log('stop', Date.now());
-    this.setState({ loading: false });
-  };
-
   getLargeImage = (e) => {
     this.setState({ largeImage: e.target.id });
     if(e.target.nodeName==='IMG'){

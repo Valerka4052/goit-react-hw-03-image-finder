@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getApi } from './api'
+import { getApi } from '../api'
 import { SearchBar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery'
 import { Button } from './Button/Button';
@@ -18,19 +18,26 @@ export class App extends Component{
     lastPage: false,
   };
 
-  componentDidUpdate(_, prevState) {
-    const { page, searchQuerry} = this.state;
+ componentDidUpdate(_, prevState) {
+  const { state: { page, searchQuerry }, toggleLoading } = this;
     if (page > prevState.page && searchQuerry === prevState.searchQuerry) {
         // Дії для кнопки Load More
-        this.toggleLoading();
-        getApi(searchQuerry, page).then((array) => {
-          if (array.length < 12) { this.setState({ lastPage: true }) };
-          this.setState(prevState => { return { pictures: [...prevState.pictures, ...array] } });
-        }).finally(this.toggleLoading());
+      toggleLoading();
+      getApi(searchQuerry, page)
+        .then((array) => {
+          if (array.length < 12) {
+            this.setState({ lastPage: true })
+          };
+          this.setState(prevState => {
+            return { pictures: [...prevState.pictures, ...array] }
+          });
+          toggleLoading();
+        });
     } else if (searchQuerry !== prevState.searchQuerry) {
-      // Дії для кнопки пошуку в SearcBar
-      this.toggleLoading();
-        getApi(searchQuerry, page).then((array) => {
+      // Дії для searchBar
+      toggleLoading();
+      getApi(searchQuerry, page)
+        .then((array) => {
           if (array.length < 12 && array.length > 0) {
             this.setState({ lastPage: true })
           };
@@ -43,15 +50,27 @@ export class App extends Component{
             Notiflix.Notify.failure('Please enter valid search querry');
             this.setState({ pictures: [] })
           };
-      }).finally(this.toggleLoading());
+          toggleLoading();
+        })
     };
   };
 
+ 
   toggleModal = () => {
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
   toggleLoading = () => {
+    console.log('toggle',Date.now())
     this.setState(({ loading }) => ({ loading: !loading }));
+  };
+
+  start = () => {
+    console.log('start', Date.now());
+    this.setState({ loading: true });
+  };
+  stop = () => {
+    console.log('stop', Date.now());
+    this.setState({ loading: false });
   };
 
   getLargeImage = (e) => {
@@ -65,11 +84,11 @@ export class App extends Component{
     if (value === '') {
       this.setState({ pictures: [] });
       Notiflix.Notify.warning('Please enter the search querry');
-      return
-    }
+      return;
+    };
     this.setState({
       searchQuerry: value,
-      page: 1
+      page: 1,
     });
   };
 
@@ -93,9 +112,9 @@ export class App extends Component{
       >
         <SearchBar
           onSearch={searchQuerryToState} />
-        <ImageGallery
+        {pictures.length > 0 && <ImageGallery
           array={pictures}
-          getLargeImage={getLargeImage} />
+          getLargeImage={getLargeImage} />}
         {loading && <Loader />}
         {!loading && pictures.length > 0 && !lastPage && <Button loadMore={loadMore} />}
         {showModal && <Modal

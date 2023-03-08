@@ -10,22 +10,16 @@ export class Modal extends Component {
         LargeImage: PropTypes.string.isRequired,
         toggleModal: PropTypes.func.isRequired,
     };
-
-     componentDidMount() {
-       window.addEventListener('click', this.ModalEventLisetener)
-    };
-     componentWillUnmount() {
-   window.removeEventListener("click", this.ModalEventLisetener);
-    };
-
+    
     ModalEventLisetener = (e) => {
         if (e.target.id === 'overlay') { return this.props.toggleModal() };
     };
 
     render() {
-    const { LargeImage } = this.props;
 
-        return createPortal(<Overlay id='overlay'>
+        const { props: { LargeImage }, ModalEventLisetener } = this;
+
+        return createPortal(<Overlay onClick={ModalEventLisetener} id='overlay'>
             <ModalContainer>
                 <img src={LargeImage} alt="" />
             </ModalContainer>

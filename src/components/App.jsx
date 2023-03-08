@@ -60,7 +60,6 @@ export class App extends Component{
     this.setState(({ showModal }) => ({ showModal: !showModal }));
   };
   toggleLoading = () => {
-    console.log('toggle',Date.now())
     this.setState(({ loading }) => ({ loading: !loading }));
   };
 
